@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page d'achat de DJI Osmo Mobile 6</title>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -256,7 +256,7 @@
             </div>
         </div>
 
-        <form id="purchaseForm" class="form-container" name="contact" method="POST" data-netlify="true">
+        <form id="purchaseForm" class="form-container">
             <!-- Informations client -->
             <div class="form-section">
                 <h3>Informations client</h3>
@@ -374,7 +374,6 @@
             <button type="submit" class="submit-btn" id="submitBtn" disabled>
                 Procéder au paiement
             </button>
-            <input type="hidden" name="form-name" value="contact" />
         </form>
     </div>
 
@@ -419,18 +418,86 @@
             }
         });
 
+        // Initialisation EmailJS
+        (function() {
+            emailjs.init("idKJ6KyuB074PWH-X");
+        })();
+
         // Gestion de la soumission du formulaire
         document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
             // Validation du formulaire
             if (!validateForm()) {
-                e.preventDefault();
                 return;
             }
             
-            // Afficher la page de paiement après soumission
-            setTimeout(function() {
+            // Récupération des données du formulaire
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                delivery: document.querySelector('input[name="delivery"]:checked').value,
+                deliveryFirstName: document.getElementById('deliveryFirstName').value || '',
+                deliveryLastName: document.getElementById('deliveryLastName').value || '',
+                deliveryPhone: document.getElementById('deliveryPhone').value || '',
+                deliveryAddress: document.getElementById('deliveryAddress').value || '',
+                billingFirstName: document.getElementById('billingFirstName').value || '',
+                billingLastName: document.getElementById('billingLastName').value || '',
+                billingCompany: document.getElementById('billingCompany').value || '',
+                billingNif: document.getElementById('billingNif').value || '',
+                billingStatNumber: document.getElementById('billingStatNumber').value || '',
+                billingAddressText: document.getElementById('billingAddressText').value || '',
+                billingPhone: document.getElementById('billingPhone').value || ''
+            };
+            
+            // Envoi de l'email avec votre template personnalisé
+            emailjs.send('service_7gtecsa', 'template_3psyyhc', {
+                to_name: 'DJI Madagascar',
+                to_email: 'djimadagascar@gmail.com',
+                from_name: formData.firstName + ' ' + formData.lastName,
+                from_email: formData.email,
+                subject: 'Nouvelle commande DJI Osmo Mobile 6',
+                message: `
+Nouvelle commande DJI Osmo Mobile 6
+
+INFORMATIONS CLIENT:
+Prénom: ${formData.firstName}
+Nom: ${formData.lastName}
+Email: ${formData.email}
+
+MODE DE RÉCEPTION: ${formData.delivery === 'pickup' ? 'Récupération en bureau' : 'Service de livraison'}
+
+${formData.delivery === 'shipping' ? `
+ADRESSE DE LIVRAISON:
+Prénom: ${formData.deliveryFirstName}
+Nom: ${formData.deliveryLastName}
+Téléphone: ${formData.deliveryPhone}
+Adresse: ${formData.deliveryAddress}
+` : ''}
+
+${formData.billingFirstName ? `
+ADRESSE DE FACTURATION:
+Prénom: ${formData.billingFirstName}
+Nom: ${formData.billingLastName}
+Société: ${formData.billingCompany}
+NIF: ${formData.billingNif}
+Numéro statistique: ${formData.billingStatNumber}
+Adresse: ${formData.billingAddressText}
+Téléphone: ${formData.billingPhone}
+` : ''}
+
+PRIX: 2 200 000 Ar
+                `
+            })
+            .then(function(response) {
+                console.log('Email envoyé avec succès:', response);
                 showPaymentPage();
-            }, 1000);
+            })
+            .catch(function(error) {
+                console.error('Erreur lors de l\'envoi:', error);
+                alert('Erreur lors de l\'envoi du formulaire. Veuillez réessayer.');
+            });
         });
 
         // Validation du formulaire
