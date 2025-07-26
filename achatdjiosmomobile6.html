@@ -454,8 +454,8 @@
             // Génération d'un ID de commande unique
             const orderId = 'DJI-' + Date.now();
             
-            // Envoi de l'email avec le format adapté
-            emailjs.send('service_7gtecsa', 'template_3psyyhc', {
+            // Envoi de l'email avec template basique
+            emailjs.send('service_7gtecsa', 'template_brqci88', {
                 email: formData.email,
                 order_id: orderId,
                 orders: [
