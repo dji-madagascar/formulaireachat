@@ -256,7 +256,7 @@
             </div>
         </div>
 
-        <form id="purchaseForm" class="form-container" action="https://formsubmit.co/djimadagascar@gmail.com" method="POST">
+        <form id="purchaseForm" class="form-container" name="contact" method="POST" data-netlify="true">
             <!-- Informations client -->
             <div class="form-section">
                 <h3>Informations client</h3>
@@ -374,6 +374,9 @@
             <button type="submit" class="submit-btn" id="submitBtn" disabled>
                 Procéder au paiement
             </button>
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="_to" value="djimadagascar@gmail.com" />
+            <input type="hidden" name="_subject" value="Nouvelle commande DJI Osmo Mobile 6" />
         </form>
     </div>
 
