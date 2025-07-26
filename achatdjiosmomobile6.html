@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'achat de DJI Osmo Mobile 6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .product-image {
+            width: 120px;
+            height: 120px;
+            background: #e9ecef;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 2em;
+            color: #6c757d;
+        }
+
+        .product-details h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .price {
+            font-size: 2em;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+
+        .delivery-options {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .delivery-option {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .delivery-option:hover {
+            border-color: #1e3c72;
+            background: #f8f9fa;
+        }
+
+        .delivery-option.selected {
+            border-color: #1e3c72;
+            background: #e3f2fd;
+        }
+
+        .delivery-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .delivery-option h4 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .delivery-option p {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-top: 5px;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .delivery-options {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DJI Osmo Mobile 6</h1>
+            <p>Stabilisateur de smartphone professionnel</p>
+        </div>
+
+        <div class="product-info">
+            <div class="product-image">
+                <img src="https://djimadagascar-fr.weebly.com/uploads/1/4/8/4/148425693/a2-osmo-mobile-6-slate-gray-vlog-combo-ariary_orig.jpg" alt="DJI Osmo Mobile 6" style="max-width:100%; max-height:100%; border-radius:12px;">
+            </div>
+            <div class="product-details">
+                <h3>DJI Osmo Mobile 6</h3>
+                <p>Stabilisateur 3 axes avec extension automatique, contrôle gestuel, et connectivité Bluetooth</p>
+                <div class="price">2 200 000 Ar</div>
+            </div>
+        </div>
+
+        <form id="purchaseForm" class="form-container" action="https://formsubmit.co/djimadagascar@gmail.com" method="POST">
+            <!-- Informations client -->
+            <div class="form-section">
+                <h3>Informations client</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">Prénom <span class="required">*</span></label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom <span class="required">*</span></label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <!-- Options de livraison -->
+            <div class="form-section">
+                <h3>Mode de réception</h3>
+                <div class="delivery-options">
+                    <div class="delivery-option" onclick="selectDelivery('pickup')">
+                        <input type="radio" id="pickup" name="delivery" value="pickup" checked>
+                        <h4>Récupération en bureau</h4>
+                        <p>Gratuit - Récupérez votre commande dans nos locaux</p>
+                    </div>
+                    <div class="delivery-option" onclick="selectDelivery('shipping')">
+                        <input type="radio" id="shipping" name="delivery" value="shipping">
+                        <h4>Service de livraison</h4>
+                        <p>Payant - Livraison à domicile</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adresse de livraison (cachée par défaut) -->
+            <div id="shippingAddress" class="form-section hidden">
+                <h3>Adresse de livraison</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="deliveryFirstName">Prénom du destinataire <span class="required">*</span></label>
+                        <input type="text" id="deliveryFirstName" name="deliveryFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="deliveryLastName">Nom du destinataire <span class="required">*</span></label>
+                        <input type="text" id="deliveryLastName" name="deliveryLastName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryPhone">Téléphone du destinataire <span class="required">*</span></label>
+                    <input type="tel" id="deliveryPhone" name="deliveryPhone">
+                </div>
+                <div class="form-group">
+                    <label for="deliveryAddress">Adresse complète <span class="required">*</span></label>
+                    <textarea id="deliveryAddress" name="deliveryAddress" rows="3"></textarea>
+                </div>
+            </div>
+
+            <!-- Adresse de facturation (facultative) -->
+            <div class="form-section">
+                <h3>Adresse de facturation (facultative)</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="differentBilling" name="differentBilling">
+                    <label for="differentBilling">Utiliser une adresse de facturation différente</label>
+                </div>
+                
+                <div id="billingAddress" class="hidden">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billingFirstName">Prénom</label>
+                            <input type="text" id="billingFirstName" name="billingFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="billingLastName">Nom</label>
+                            <input type="text" id="billingLastName" name="billingLastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="billingCompany">Société</label>
+                        <input type="text" id="billingCompany" name="billingCompany">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="billingNif">NIF</label>
+                            <input type="text" id="billingNif" name="billingNif">
+                        </div>
+                        <div class="form-group">
+                            <label for="billingStatNumber">Numéro statistique</label>
+                            <input type="text" id="billingStatNumber" name="billingStatNumber">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="billingAddress">Adresse</label>
+                        <textarea id="billingAddressText" name="billingAddressText" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="billingPhone">Téléphone</label>
+                        <input type="tel" id="billingPhone" name="billingPhone">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conditions -->
+            <div class="form-section">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                    <label for="acceptTerms">
+                        En remplissant le formulaire d'achat, j'accepte les <strong>conditions de vente</strong>, 
+                        ainsi que la <strong>politique de retour de marchandise</strong> <span class="required">*</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                Procéder au paiement
+            </button>
+            <input type="hidden" name="_next" value="https://votre-site.github.io/qr-paiement.html">
+        </form>
+    </div>
+
+    <script>
+        // Gestion des options de livraison
+        function selectDelivery(type) {
+            // Mettre à jour les boutons radio
+            document.getElementById(type).checked = true;
+            
+            // Mettre à jour l'apparence des options
+            document.querySelectorAll('.delivery-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Afficher/masquer l'adresse de livraison
+            const shippingAddress = document.getElementById('shippingAddress');
+            if (type === 'shipping') {
+                shippingAddress.classList.remove('hidden');
+                // Rendre les champs obligatoires
+                document.getElementById('deliveryFirstName').required = true;
+                document.getElementById('deliveryLastName').required = true;
+                document.getElementById('deliveryPhone').required = true;
+                document.getElementById('deliveryAddress').required = true;
+            } else {
+                shippingAddress.classList.add('hidden');
+                // Rendre les champs optionnels
+                document.getElementById('deliveryFirstName').required = false;
+                document.getElementById('deliveryLastName').required = false;
+                document.getElementById('deliveryPhone').required = false;
+                document.getElementById('deliveryAddress').required = false;
+            }
+        }
+
+        // Gestion de l'adresse de facturation
+        document.getElementById('differentBilling').addEventListener('change', function() {
+            const billingAddress = document.getElementById('billingAddress');
+            if (this.checked) {
+                billingAddress.classList.remove('hidden');
+            } else {
+                billingAddress.classList.add('hidden');
+            }
+        });
+
+        // Gestion de la soumission du formulaire
+        document.getElementById('purchaseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validation du formulaire
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Simuler le traitement et redirection vers la page de paiement
+            showPaymentPage();
+        });
+
+        // Validation du formulaire
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#dc3545';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#e9ecef';
+                }
+            });
+            
+            return isValid;
+        }
+
+        // Gestion du bouton de soumission
+        document.getElementById('acceptTerms').addEventListener('change', function() {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = !this.checked;
+        });
+
+        // Afficher la page de paiement
+        function showPaymentPage() {
+            // Créer la page de paiement avec QR code
+            const paymentHTML = `
+                <!DOCTYPE html>
+                <html lang="fr">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Paiement - DJI Osmo Mobile 6</title>
+                    <style>
+                        body {
+                            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            min-height: 100vh;
+                            margin: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 20px;
+                        }
+                        .payment-container {
+                            background: white;
+                            border-radius: 20px;
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                            padding: 40px;
+                            text-align: center;
+                            max-width: 500px;
+                            width: 100%;
+                        }
+                        .qr-code {
+                            width: 200px;
+                            height: 200px;
+                            background: #f8f9fa;
+                            border: 2px solid #e9ecef;
+                            border-radius: 15px;
+                            margin: 30px auto;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 4em;
+                        }
+                        .amount {
+                            font-size: 2.5em;
+                            color: #28a745;
+                            font-weight: bold;
+                            margin: 20px 0;
+                        }
+                        .instructions {
+                            color: #6c757d;
+                            line-height: 1.6;
+                            margin: 20px 0;
+                        }
+                        .back-btn {
+                            background: #6c757d;
+                            color: white;
+                            border: none;
+                            padding: 12px 30px;
+                            border-radius: 25px;
+                            font-size: 1em;
+                            cursor: pointer;
+                            margin-top: 20px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="payment-container">
+                        <h1>Paiement sécurisé</h1>
+                        <div class="amount">€299.00</div>
+                        <div class="qr-code">📱</div>
+                        <div class="instructions">
+                            <p><strong>Scannez ce QR code</strong> avec votre application bancaire pour effectuer le paiement.</p>
+                            <p>Votre commande sera traitée une fois le paiement confirmé.</p>
+                        </div>
+                        <button class="back-btn" onclick="history.back()">Retour au formulaire</button>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Remplacer le contenu de la page
+            document.documentElement.innerHTML = paymentHTML;
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sélectionner l'option de récupération par défaut
+            selectDelivery('pickup');
+        });
+
+        // Récupérer le prix depuis Google Sheets
+        fetch('https://gsx2json.com/api?id=1pt3pCvnos472j1kPkKa-U1cdcJPmCP28vFrUttL87Tw')
+          .then(response => response.json())
+          .then(data => {
+            if (!data || !Array.isArray(data.rows)) {
+              document.querySelector('.price').textContent = 'Données introuvables';
+              console.error("Format inattendu : ", data);
+              return;
+            }
+
+            // Récupérer le prix de la ligne 34 (index 33 car index commence à 0)
+            const produit = data.rows[33]; // Ligne 34 = index 33
+
+            if (produit && produit.price) {
+              // Afficher le prix (résultat de la formule si c'est une formule)
+              const prix = produit.price.toString().trim();
+              document.querySelector('.price').textContent = prix + ' Ar';
+            } else {
+              document.querySelector('.price').textContent = 'Prix non trouvé';
+            }
+          })
+          .catch(error => {
+            document.querySelector('.price').textContent = 'Erreur: ' + error.message;
+            console.error(error);
+          });
+    </script>
+</body>
+</html>
