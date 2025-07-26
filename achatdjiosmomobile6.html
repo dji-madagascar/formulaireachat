@@ -451,44 +451,37 @@
                 billingPhone: document.getElementById('billingPhone').value || ''
             };
             
-            // Envoi de l'email avec votre template personnalisé
+            // Génération d'un ID de commande unique
+            const orderId = 'DJI-' + Date.now();
+            
+            // Envoi de l'email avec le format adapté
             emailjs.send('service_7gtecsa', 'template_3psyyhc', {
-                to_name: 'DJI Madagascar',
-                to_email: 'djimadagascar@gmail.com',
-                from_name: formData.firstName + ' ' + formData.lastName,
-                from_email: formData.email,
-                subject: 'Nouvelle commande DJI Osmo Mobile 6',
-                message: `
-Nouvelle commande DJI Osmo Mobile 6
-
-INFORMATIONS CLIENT:
-Prénom: ${formData.firstName}
-Nom: ${formData.lastName}
-Email: ${formData.email}
-
-MODE DE RÉCEPTION: ${formData.delivery === 'pickup' ? 'Récupération en bureau' : 'Service de livraison'}
-
-${formData.delivery === 'shipping' ? `
-ADRESSE DE LIVRAISON:
-Prénom: ${formData.deliveryFirstName}
-Nom: ${formData.deliveryLastName}
-Téléphone: ${formData.deliveryPhone}
-Adresse: ${formData.deliveryAddress}
-` : ''}
-
-${formData.billingFirstName ? `
-ADRESSE DE FACTURATION:
-Prénom: ${formData.billingFirstName}
-Nom: ${formData.billingLastName}
-Société: ${formData.billingCompany}
-NIF: ${formData.billingNif}
-Numéro statistique: ${formData.billingStatNumber}
-Adresse: ${formData.billingAddressText}
-Téléphone: ${formData.billingPhone}
-` : ''}
-
-PRIX: 2 200 000 Ar
-                `
+                email: formData.email,
+                order_id: orderId,
+                orders: [
+                    { 
+                        name: "DJI Osmo Mobile 6", 
+                        units: 1, 
+                        price: "2200000" 
+                    }
+                ],
+                cost: {
+                    shipping: formData.delivery === 'shipping' ? "50000" : "0",
+                    tax: "0"
+                },
+                customer_info: {
+                    name: formData.firstName + ' ' + formData.lastName,
+                    email: formData.email,
+                    delivery_type: formData.delivery === 'pickup' ? 'Récupération en bureau' : 'Service de livraison',
+                    delivery_address: formData.delivery === 'shipping' ? formData.deliveryAddress : '',
+                    delivery_phone: formData.delivery === 'shipping' ? formData.deliveryPhone : '',
+                    billing_name: formData.billingFirstName ? formData.billingFirstName + ' ' + formData.billingLastName : '',
+                    billing_company: formData.billingCompany || '',
+                    billing_nif: formData.billingNif || '',
+                    billing_stat: formData.billingStatNumber || '',
+                    billing_address: formData.billingAddressText || '',
+                    billing_phone: formData.billingPhone || ''
+                }
             })
             .then(function(response) {
                 console.log('Email envoyé avec succès:', response);
